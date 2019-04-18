@@ -4,7 +4,8 @@ var ExtractJwt = require('passport-jwt').ExtractJwt;
 var mongoose = require('mongoose');
 mongoose.Promise=global.Promise;
 //Set up default mongoose connection
-var mongoDB = 'mongodb+srv://canvasUser:189293Kp@canvascluster-wpxt5.mongodb.net/canvas?retryWrites=true';
+var mongoDB = 'mongodb+srv://admin:cmpe281@cluster0-xrrkt.mongodb.net/test?retryWrites=true';
+
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var {userModel}=require("../models/models");
 // Setup work and export for the JWT passport strategy
