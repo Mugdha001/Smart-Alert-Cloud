@@ -23,8 +23,8 @@ var {userModel,courseModel}=require("../models/models");
 //   });
   const AWS = require('aws-sdk');
 const s3 = new AWS.S3({
-  accessKeyId: "AKIAJNBPSJ7YXEEDZLZQ",
-  secretAccessKey: "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"
+  accessKeyId: "",
+  secretAccessKey: ""
 });
 //   con.connect(function(err) {
 //     if (err) throw err;
