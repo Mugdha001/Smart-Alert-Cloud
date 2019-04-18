@@ -18,6 +18,7 @@ import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.jsx";
+import cookie from 'react-cookies'
 
 const dashboardRoutes = [
   {
@@ -77,21 +78,25 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/upgrade-to-pro",
-    name: "Upgrade To PRO",
+    path: "/login",
+    name: "Logout",
     rtlName: "التطور للاحترافية",
     icon: Unarchive,
     component: UpgradeToPro,
-    layout: "/admin"
-  },
-  {
-    path: "/rtl-page",
-    name: "RTL Support",
-    rtlName: "پشتیبانی از راست به چپ",
-    icon: Language,
-    component: RTLPage,
-    layout: "/rtl"
+    layout: "/login",
+    funcDeletecookie: function(){
+      cookie.remove('cookie', { path: '/' })
+    }
   }
+  // },
+  // {
+  //   path: "/rtl-page",
+  //   name: "RTL Support",
+  //   rtlName: "پشتیبانی از راست به چپ",
+  //   icon: Language,
+  //   component: RTLPage,
+  //   layout: "/rtl"
+  // }
 ];
 
 export default dashboardRoutes;

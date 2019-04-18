@@ -16,8 +16,10 @@ var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 mongoose.Promise=global.Promise;
 //Set up default mongoose connection
-var mongoDB = 'mongodb+srv://canvasUser:189293Kp@canvascluster-wpxt5.mongodb.net/canvas?retryWrites=true';
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+var mongoDB = 'mongodb+srv://canvasUser:189293Kp@canvascluster-wpxt5.mongodb.net/smartAlert?retryWrites=true';
+mongoose.connect(mongoDB, { useNewUrlParser: true }).catch((err)=>{
+  console.log(error);
+});
 
 var {userModel}=require("./models/models");
 

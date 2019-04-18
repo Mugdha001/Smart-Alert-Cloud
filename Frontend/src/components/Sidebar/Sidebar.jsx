@@ -27,7 +27,7 @@ const Sidebar = ({ ...props }) => {
       {routes.map((prop, key) => {
         var activePro = " ";
         var listItemClasses;
-        if (prop.path === "/upgrade-to-pro") {
+        if (prop.path === "/") {
           activePro = classes.activePro + " ";
           listItemClasses = classNames({
             [" " + classes[color]]: true
@@ -46,6 +46,7 @@ const Sidebar = ({ ...props }) => {
             className={activePro + classes.item}
             activeClassName="active"
             key={key}
+            onClick={prop.funcDeletecookie?prop.funcDeletecookie:()=>{}}
           >
             <ListItem button className={classes.itemLink + listItemClasses}>
               {typeof prop.icon === "string" ? (
