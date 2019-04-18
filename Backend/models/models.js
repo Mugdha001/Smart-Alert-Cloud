@@ -4,28 +4,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  chats:[{
-    uid:{type:Schema.Types.ObjectId,ref:'users'},
-    messages:[{
-      action:String,
-      messagetext:String
-    }]
-  }],
   email: String,
   password: String,
   name:String,
-  profileImage:String,
-  gender:String,
-  phoneNumber:String,
-  city:String,
-  country:String,
-  school:String,
-  aboutMe:String,
-  hometown:String,
-  languages:String,
   role:String,
-  courses:[{type:Schema.Types.ObjectId,ref:'courses'}],
-  waitlistcourses:[{type:Schema.Types.ObjectId,ref:'courses'}]
 });
 
 var courseSchema=new Schema({
