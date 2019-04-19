@@ -83,7 +83,7 @@ const dashboardRoutes = [
     rtlName: "التطور للاحترافية",
     icon: Unarchive,
     component: UpgradeToPro,
-    layout: "/login",
+    // layout: "/",
     funcDeletecookie: function(){
       cookie.remove('cookie', { path: '/' })
     }

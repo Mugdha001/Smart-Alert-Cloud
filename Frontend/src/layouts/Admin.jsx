@@ -12,6 +12,7 @@ import Navbar from "components/Navbars/Navbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+import cookie from 'react-cookies'  
 
 import routes from "routes.js";
 
@@ -89,9 +90,15 @@ class Dashboard extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
+
     const { classes, ...rest } = this.props;
+    let redirectVar = null;
+    if(!cookie.load("cookie")){
+        redirectVar = <Redirect to= "/login"/>
+    }
     return (
       <div className={classes.wrapper}>
+      {redirectVar}
         <Sidebar
           routes={routes}
           logoText={"Creative Tim"}
