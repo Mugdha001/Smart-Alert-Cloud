@@ -1,4 +1,12 @@
 import React from "react";
+import CardBody from "components/Card/CardBody.jsx";
+import Card from "components/Card/Card.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 import {
   withScriptjs,
   withGoogleMap,
@@ -83,12 +91,95 @@ const CustomSkinMap = withScriptjs(
 
 function Maps({ ...props }) {
   return (
-    <CustomSkinMap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
-      loadingElement={<div style={{ height: `100%` }} />}
-      containerElement={<div style={{ height: `100vh` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
-    />
+    <Card>
+      <CardBody>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={4}>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                Add Sensor Node
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                    sit amet blandit leo lobortis eget.
+                
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <br></br>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                Add Cluster Node
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                    sit amet blandit leo lobortis eget.
+                
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <br></br>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                Edit Sensor Node
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                    sit amet blandit leo lobortis eget.
+                
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <br></br>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                Edit Cluster Node
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                    sit amet blandit leo lobortis eget.
+                
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <br></br>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                Delete Sensor
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                    sit amet blandit leo lobortis eget.
+                
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <br></br>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                Delete Cluster
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                  <CustomInput
+                    labelText="Sensor Id"
+                    id="sensor-id"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />                
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            </GridItem>
+            <GridItem>
+              <CustomSkinMap
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `100vh` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+              />
+            </GridItem>
+          </GridContainer>
+        </CardBody>    
+    </Card>
+    
   );
 }
 
