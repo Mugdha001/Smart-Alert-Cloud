@@ -90,7 +90,7 @@ const Sidebar = ({ ...props }) => {
         <div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
         </div>
-        {logoText}
+        {"SmartAlertCloud"}
       </a>
     </div>
   );
