@@ -10,6 +10,18 @@ var userSchema = new Schema({
   role:String,
 });
 
+var clusterSchema = new Schema({
+  clusterid: String,
+  clusterlatitude: String,
+  clusterlongitude:String
+});
+
+var sensorSchema = new Schema({
+  sensorid: String,
+  sensorlatitude: String,
+  sensorlongitude:String
+});
+
 var courseSchema=new Schema({
   courseId: Number,
   courseTerm: String,
@@ -88,5 +100,7 @@ var courseModel = mongoose.model('courses', courseSchema );
 
 module.exports={
     userModel,
+    clusterSchema,
+    sensorSchema,
     courseModel
 }

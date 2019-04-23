@@ -69,7 +69,7 @@ class Login extends Component {
   render() {
     let redirectVar = null;
     if(cookie.load("cookie")){
-        redirectVar = <Redirect to= "/home"/>
+        redirectVar = <Redirect to= "/admin/dashboard"/>
     }
       return(<div>
 

@@ -59,6 +59,7 @@ app.use(function(req, res, next) {
 
 //login implemented using async await 
 
+
  app.post('/login',function(req,res){
     (async function(){
 
@@ -151,6 +152,43 @@ app.post('/signup',function(req,res){
     }
   })();
 });
+
+app.post('/addSensor',function(req,res){
+  let{clusterid,latitude,longitude}=req.body; 
+  (async()=>{
+    try {
+          let responseOne=await userModel.findOne({email});
+        if(responseOne){
+            var body={
+                      message:"Signup failed! Email already exists",
+                      insertStatus:0
+                    };
+            res.status(200).json(body);
+        }else{
+            let hash=await bcrypt.hash(password, saltRounds);
+
+            //saving user to mongoDB
+            
+            var user=new userModel({email,password:hash,name,role});
+            let response=await user.save();
+            console.log("user saved");
+            console.log(response);
+            var body={
+              message:"Sign up successfull. Redirecting to Login Page...",
+              insertStatus:1
+            };
+            res.status(200).json(body);
+        } 
+    } catch (error) {
+      res.writeHead(400,{
+        'Content-Type':'text/plain'
+     });
+     res.end(err.toString());
+      console.log(error);
+    }
+  })();
+});
+
 module.exports = app;
 app.listen(3001,function(){
 console.log("Server Listening on port 3001");
