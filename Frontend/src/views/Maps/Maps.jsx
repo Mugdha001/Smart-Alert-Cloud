@@ -349,7 +349,7 @@ function map({ ...props }) {
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
             <CustomSkinMap
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmelB3qzfrGz3D1aBArxE7_EVQ6li5T5Q"
+              googleMapURL="https://maps.googleapis.com/maps/api/js?"
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `100vh` }} />}
               mapElement={<div style={{ height: `100%` }} />}
