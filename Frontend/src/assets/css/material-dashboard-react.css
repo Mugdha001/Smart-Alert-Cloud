@@ -515,3 +515,6 @@ footer ul li a:hover {
   width: 100%;
     padding: 5px;
 }
+.fixed-plugin{
+  display:none;
+}
