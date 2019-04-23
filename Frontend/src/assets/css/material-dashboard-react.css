@@ -506,6 +506,15 @@ footer ul li a:hover {
   right: auto;
   left: 80px;
 }
+.drp-down{
+  padding: 5px;
+  width: 100%;
+  margin-bottom:10px;
+}
+.select-drp{
+  width: 100%;
+    padding: 5px;
+}
 .fixed-plugin{
   display:none;
 }
