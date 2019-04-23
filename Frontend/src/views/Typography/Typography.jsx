@@ -1,9 +1,7 @@
-
 import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
-
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -17,10 +15,10 @@ const style = {
   note: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     bottom: "10px",
-    color: "FFFFFF",
+    color: "#c0c1c2",
     display: "block",
     fontWeight: "400",
-    fontSize: "20px",
+    fontSize: "13px",
     lineHeight: "13px",
     left: "0",
     marginLeft: "20px",
@@ -49,31 +47,31 @@ function BillingPage(props) {
   return (
     <Card>
       <CardHeader color="primary">
-        <h4 className={classes.cardTitleWhite}>Billing cycle</h4>
+        <h4 className={classes.cardTitleWhite}>Pricing Overview</h4>
         <p className={classes.cardCategoryWhite}>
-          Pricing overview
+          Set Pricing Details
         </p>
       </CardHeader>
       <CardBody>
+        
         <div className={classes.typo}>
-          <div className={classes.note}>HOURLY CHARGE</div>
-          <h1>Sensors are charged $2.99 per hour.</h1>
+          <div className={classes.note}><h3>Hourly Charge</h3></div><br></br>
+          <h4>Sensors are charged $5 per hour, you currently have 6 nodes up and running, which costs $720 per day.</h4>
         </div>
         <div className={classes.typo}>
-          <div className={classes.note}>DAILY CHARGE</div>
-          <h2>Sensors are charged $12.99 per day.</h2>
+          <div className={classes.note}><h3>Daily Charge</h3></div><br></br>
+          <h4>Sensors are charged $15 per day, you currently have 6 nodes up and running, which costs $90 per day.</h4>
         </div>
         <div className={classes.typo}>
-          <div className={classes.note}>MONTHLY CHARGE</div>
-          <h3>Sensors are charged $29.99 per month.</h3>
+          <div className={classes.note}><h3>Monthly Charge</h3></div><br></br>
+          <h4>Sensors are charged $300 per month, you currently have 6 nodes up and running, which costs $60 per day.</h4>
         </div>
         <div className={classes.typo}>
-          <div className={classes.note}>YEARLY CHARGE</div>
-          <h4>Sensors are charged $299.99 per year.</h4>
+          <div className={classes.note}><h3>Yearly Charge</h3></div><br></br>
+          <h4>Sensors are charged $1000 per year, you currently have 6 nodes up and running, which costs $16 per day.</h4>
         </div>
         
-
-          
+        
       </CardBody>
     </Card>
   );

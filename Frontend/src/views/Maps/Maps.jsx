@@ -1,5 +1,6 @@
 import React from "react";
 import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
 import Card from "components/Card/Card.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -8,6 +9,8 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Select from '@material-ui/core/Select';
 
 import {
   withScriptjs,
@@ -15,6 +18,44 @@ import {
   GoogleMap,
   Marker
 } from "react-google-maps";
+
+
+const style = {
+  typo: {
+    paddingLeft: "25%",
+    marginBottom: "40px",
+    position: "relative"
+  },
+  note: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    bottom: "10px",
+    color: "#c0c1c2",
+    display: "block",
+    fontWeight: "400",
+    fontSize: "13px",
+    lineHeight: "13px",
+    left: "0",
+    marginLeft: "20px",
+    position: "absolute",
+    width: "260px"
+  },
+  cardCategoryWhite: {
+    color: "rgba(255,255,255,.62)",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    marginBottom: "0"
+  },
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none"
+  }
+};
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
@@ -97,69 +138,75 @@ const CustomSkinMap = withScriptjs(
 
 //export default Maps;
 function map({ ...props }) {
+  const { classes } = props;
   return(
 <Card>
+      <CardHeader color="primary">
+        <h4 className={classes.cardTitleWhite}>Infrastructure View</h4>
+        <p className={classes.cardCategoryWhite}>
+          Clusters and Sensors View
+        </p>
+      </CardHeader>
       <CardBody>
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <ExpansionPanel>
               <ExpansionPanelSummary>
-                Add Sensor Node
+                Create Cluster Node
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <CustomInput
-                  labelText="Cluster Id"
-                  id="cluster-id"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-                <CustomInput
-                  labelText="Sensor Latitude"
-                  id="sensor-latitude"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-                <CustomInput
-                  labelText="Sensor Longitude"
-                  id="sensor-longitude"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-
-              </ExpansionPanelDetails>
-              <Button
-                fullWidth
-                color="primary"
-                onClick={() => props.Marker
                 
-              }
+                <CustomInput
+                  labelText="Cluster Node IP Address"
+                  id="cluster-ip"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                />
+                <label>Status</label>
+                  <select>
+                    <option>ON</option>
+                    <option>OFF</option>
+                  </select> 
+                               
+
+              </ExpansionPanelDetails>
+              <Button
+                fullWidth
+                color="primary"
               >
-                Add Sensor
+                Create Cluster Node
                   </Button>
             </ExpansionPanel>
             <br></br>
             <ExpansionPanel>
               <ExpansionPanelSummary>
-                Add Cluster Node
+                Create Sensor Node
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
+                
+                <label>Cluster Node IP Address</label>
+                  <select>
+                    <option>130.65.254.1</option>
+                    <option>130.65.254.2</option>
+                    <option>130.65.254.3</option>
+                    <option>130.65.254.4</option>
+                  </select>               
                 <CustomInput
-                  labelText="Cluster Latitude"
-                  id="cluster-latitude"
+                  labelText="Sensor Node IP Address"
+                  id="sensor-ip"
                   formControlProps={{
                     fullWidth: true
                   }}
                 />
-                <CustomInput
-                  labelText="Cluster Latitude"
-                  id="cluster-longitude"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
+                <label>Status</label>
+                  <select>
+                    <option>ON</option>
+                    <option>OFF</option>
+                  </select> 
+                
+
+                
 
               </ExpansionPanelDetails>
               <Button
@@ -167,116 +214,84 @@ function map({ ...props }) {
                 color="primary"
               //onClick={() => this.showNotification("br")}
               >
-                Add Cluster
+                Create Sensor Node
                   </Button>
             </ExpansionPanel>
 
             <br></br>
             <ExpansionPanel>
               <ExpansionPanelSummary>
-                Edit Sensor Node
+                Update Cluster Node
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
+              <label>Cluster Node IP Address</label>
+                  <select>
+                    <option>130.65.254.1</option>
+                    <option>130.65.254.2</option>
+                    <option>130.65.254.3</option>
+                    <option>130.65.254.4</option>
+                  </select>
                 <CustomInput
-                  labelText="Cluster Id"
-                  id="cluster-id"
+                  labelText="New Cluster IP"
+                  id="new-cluster-ip"
                   formControlProps={{
                     fullWidth: true
                   }}
                 />
-                <CustomInput
-                  labelText="Sensor Id"
-                  id="sensor-id"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-                <CustomInput
-                  labelText="Sensor Latitude"
-                  id="sensor-latitude"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-                <CustomInput
-                  labelText="Sensor Longitude"
-                  id="sensor-longitude"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
+                <label>Status</label>
+                  <select>
+                    <option>ON</option>
+                    <option>OFF</option>
+                  </select> 
+                
               </ExpansionPanelDetails>
               <Button
                 fullWidth
                 color="primary"
               //onClick={() => this.showNotification("br")}
               >
-                Edit Sensor Node
+                Update Cluster Node
                   </Button>
             </ExpansionPanel>
             <br></br>
             <ExpansionPanel>
               <ExpansionPanelSummary>
-                Edit Cluster Node
+                Update Sensor Node
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
+              <label>Cluster Node IP Address</label>
+                  <select>
+                    <option>130.65.254.1</option>
+                    <option>130.65.254.2</option>
+                    <option>130.65.254.3</option>
+                    <option>130.65.254.4</option>
+                  </select>
+                  <label>Old Sensor Node IP Address</label>
+                  <select>
+                    <option>130.65.124.1</option>
+                    <option>130.65.124.2</option>
+                    <option>130.65.124.3</option>
+                    <option>130.65.124.4</option>
+                  </select>
                 <CustomInput
-                  labelText="Cluster Id"
-                  id="cluster-id"
+                  labelText="New Sensor IP Address"
+                  id="new-sensor-ip"
                   formControlProps={{
                     fullWidth: true
                   }}
                 />
-                <CustomInput
-                  labelText="Cluster Latitude"
-                  id="cluster-latitude"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-                <CustomInput
-                  labelText="Cluster Latitude"
-                  id="cluster-longitude"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
+                <label>Status</label>
+                  <select>
+                    <option>ON</option>
+                    <option>OFF</option>
+                  </select> 
               </ExpansionPanelDetails>
               <Button
                 fullWidth
                 color="primary"
               //onClick={() => this.showNotification("br")}
               >
-                Edit Cluster Node
-                  </Button>
-            </ExpansionPanel>
-            <br></br>
-            <ExpansionPanel>
-              <ExpansionPanelSummary>
-                Delete Sensor
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <CustomInput
-                  labelText="Cluster Id"
-                  id="cluster-id"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-                <CustomInput
-                  labelText="Sensor Id"
-                  id="sensor-id"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-              </ExpansionPanelDetails>
-              <Button
-                fullWidth
-                color="danger"
-              //onClick={() => this.showNotification("br")}
-              >
-                Delete Sensor
+                Update Sensor Node
                   </Button>
             </ExpansionPanel>
             <br></br>
@@ -285,14 +300,14 @@ function map({ ...props }) {
                 Delete Cluster
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <CustomInput
-                  labelText="Cluster Id"
-                  id="cluster-id"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-
+              <label>Cluster Node IP Address</label>
+                  <select>
+                    <option>130.65.254.1</option>
+                    <option>130.65.254.2</option>
+                    <option>130.65.254.3</option>
+                    <option>130.65.254.4</option>
+                  </select>
+               
               </ExpansionPanelDetails>
               <Button
                 fullWidth
@@ -300,12 +315,41 @@ function map({ ...props }) {
               //onClick={() => this.showNotification("br")}
               >
                 Delete Cluster
+                  </Button>
+            </ExpansionPanel>
+            <br></br>
+            <ExpansionPanel>
+              <ExpansionPanelSummary>
+                Delete Sensor
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+              <label>Cluster Node IP Address</label>
+                  <select>
+                    <option>130.65.254.1</option>
+                    <option>130.65.254.2</option>
+                    <option>130.65.254.3</option>
+                    <option>130.65.254.4</option>
+                  </select>
+                  <label>Sensor Node IP Address</label>
+                  <select>
+                    <option>130.65.124.1</option>
+                    <option>130.65.124.2</option>
+                    <option>130.65.124.3</option>
+                    <option>130.65.124.4</option>
+                  </select>
+              </ExpansionPanelDetails>
+              <Button
+                fullWidth
+                color="danger"
+              //onClick={() => this.showNotification("br")}
+              >
+                Delete Sensor
                   </Button>
             </ExpansionPanel>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
             <CustomSkinMap
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key="
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmelB3qzfrGz3D1aBArxE7_EVQ6li5T5Q"
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `100vh` }} />}
               mapElement={<div style={{ height: `100%` }} />}
@@ -317,4 +361,4 @@ function map({ ...props }) {
   );
 }
 
-export default map;
+export default withStyles(style)(map);
