@@ -20,7 +20,13 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 import RTLPage from "views/RTLPage/RTLPage.jsx";
 import cookie from 'react-cookies'
 
-const dashboardRoutes = [
+
+let dashboardRoutes=[];
+if(cookie.load("cookie")){
+  let cookieData=cookie.load("cookie");
+  console.log(cookieData);
+  if(cookieData.role=="admin"){
+ dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -98,5 +104,36 @@ const dashboardRoutes = [
   //   layout: "/rtl"
   // }
 ];
-
+}else{
+  dashboardRoutes=[
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      rtlName: "لوحة القيادة",
+      icon: Dashboard,
+      component: DashboardPage,
+      layout: "/admin"
+    }
+    ,{
+      path: "/table",
+      name: "Table List",
+      rtlName: "قائمة الجدول",
+      icon: "content_paste",
+      component: TableList,
+      layout: "/admin"
+    },  {
+      path: "/login",
+      name: "Logout",
+      rtlName: "التطور للاحترافية",
+      icon: Unarchive,
+      component: UpgradeToPro,
+      // layout: "/",
+      funcDeletecookie: function(){
+        cookie.remove('cookie', { path: '/' })
+      }
+    }
+    
+  ];
+}
+}
 export default dashboardRoutes;
