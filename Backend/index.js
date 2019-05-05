@@ -329,7 +329,7 @@ app.get('/allregions',async (req,res)=>{
 })
 app.get('/allclusters',async (req,res)=>{
   try {
-    let result=await clusterModel.find({});
+    let result=await clusterModel.find({}).populate({path:"sensorNodeArray",type:"sensornode"});
     res.status(200).json(result);
   } catch (error) {
     

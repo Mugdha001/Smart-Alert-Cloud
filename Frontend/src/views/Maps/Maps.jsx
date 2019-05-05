@@ -13,6 +13,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Select from '@material-ui/core/Select';
 import {rootUrl} from "../../components/helpers/urlhelper";
 import axios from 'axios';
+import "../../assets/css/login.css"
 import {
   withScriptjs,
   withGoogleMap,
@@ -153,7 +154,8 @@ class map extends Component {
       regionId:"",
       sensorIp:"",
       clusterId:"",
-      sensors:[]
+      sensors:[],
+      updateSensorOld:[]
     }
     this.addRegion=this.addRegion.bind(this);
   }
@@ -162,16 +164,24 @@ class map extends Component {
       [property]:e.target.value
     })
   }
+  updateSensorDropdown=(e)=>{
+    let array=this.state.clusters.filter((data)=>{return data._id==e.target.value})
+    this.setState({
+      updateSensorOld:array[0].sensorNodeArray
+    })
+  }
   update=()=>{
     (async()=>{
     try {
       let {data:regions}=await axios.get(rootUrl+'/allregions');
       let {data:clusters}=await axios.get(rootUrl+"/allclusters");
       let {data:sensors}=await axios.get(rootUrl+"/allsensors");
+
       this.setState({
         regions,
         clusters,
-        sensors
+        sensors,
+        updateSensorOld:clusters[0]?clusters[0].sensorNodeArray:[]
       })
     } catch (error) {
     }
@@ -221,9 +231,52 @@ class map extends Component {
       }
     })();
   }
+  deleteClusterId=()=>{
+    (async()=>{
+      try {
+        let {delClusterId}=this.state;
+        if(!delClusterId){
+          delClusterId=this.state.clusters[0]._id;
+        }
+        let result=await axios.post(rootUrl+'/deleteCluster',{clusterId:delClusterId});
+        if(result.status==200){
+          this.setState({
+            clusterIp:"",
+            regionId:""
+          });
+          alert("Cluster Deleted successfully!");
+          this.update();
+        }
+      } catch (error) {
+        
+      }
+    })();
+  }
+  deleteSensorId=()=>{
+    (async()=>{
+      try {
+        let {delsensorId}=this.state;
+        if(!delsensorId){
+          delsensorId=this.state.updateSensorOld[0]._id;
+        }
+        let result=await axios.post(rootUrl+'/deletesensorNode',{sensornodeId:delsensorId});
+        if(result.status==200){
+          this.setState({
+            clusterIp:"",
+            regionId:""
+          });
+          alert("Sensor Node Deleted successfully!");
+          this.update();
+        }
+      } catch (error) {
+        
+      }
+    })();
+  }
   updateCluster=()=>{
     (async()=>{
       try {
+        
         let {updateClusterId,newclusterIp:ipaddress,clusters,clusterStatus:status}=this.state;
         if(!updateClusterId){
           updateClusterId=clusters[0]._id;
@@ -241,6 +294,35 @@ class map extends Component {
             status:""
           });
           alert("Cluster Updated successfully!");
+          this.update();
+        }
+      } catch (error) {
+        
+      }
+    })();
+  }
+  updateSensorNode=()=>{
+    (async()=>{
+      try {
+          
+
+        let {oldsensorId,newsensorIp:ipaddress,clusters,updateSensorStatus:status}=this.state;
+        if(!oldsensorId){
+          oldsensorId=this.state.updateSensorOld[0]._id;
+        }
+        if(!ipaddress ||ipaddress==""){
+          ipaddress=this.state.updateSensorOld.filter(data=>data._id==oldsensorId)[0].ipaddress;
+        }
+        if(!status || status==""){
+          status="ON"
+        }
+        let result=await axios.post(rootUrl+'/updatesensornode',{sensorId:oldsensorId,ipaddress,status});
+        if(result.status==200){
+          this.setState({
+            newclusterIp:"",
+            status:""
+          });
+          alert("Sensor Node Updated successfully!");
           this.update();
         }
       } catch (error) {
@@ -276,7 +358,7 @@ class map extends Component {
 
 
     return (
-      <Card>
+      <Card className="dashboard">
         <CardHeader color="primary">
           <h4 className={classes.cardTitleWhite}>Infrastructure View</h4>
           <p className={classes.cardCategoryWhite}>
@@ -358,7 +440,6 @@ class map extends Component {
                   Create Sensor Node
                   </Button>
               </ExpansionPanel>
-
               <br></br>
               <ExpansionPanel>
                 <ExpansionPanelSummary>
@@ -396,33 +477,27 @@ class map extends Component {
               </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   <label>Cluster Node IP Address</label>
-                  <select>
-                    <option>130.65.254.1</option>
-                    <option>130.65.254.2</option>
-                    <option>130.65.254.3</option>
-                    <option>130.65.254.4</option>
-                  </select>
+                    <select onChange={this.updateSensorDropdown}>
+                    {this.state.clusters.map((data)=>{
+                      return(<option value={data._id}>{data.ipaddress}</option>)
+                    })}
+                    </select>
                   <label>Old Sensor Node IP Address</label>
-                  <select>
-                    <option>130.65.124.1</option>
-                    <option>130.65.124.2</option>
-                    <option>130.65.124.3</option>
-                    <option>130.65.124.4</option>
-                  </select>
-                  <CustomInput
-                    labelText="New Sensor IP Address"
-                    id="new-sensor-ip"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
+                  <select onChange={(e)=>{this.changeHandler('oldsensorId',e)}}>
+                    {this.state.updateSensorOld.map((data)=>{
+                      return(<option value={data._id}>{data.ipaddress}</option>)
+                    })}
+                    </select>                  
+                  <input value={this.state.newsensorIp} onChange={(e)=>{this.changeHandler('newsensorIp',e)}} placeholder="New Ip Address"></input>
+
                   <label>Status</label>
-                  <select>
+                  <select onChange={(e)=>{this.changeHandler('updateSensorStatus',e)}}>
                     <option>ON</option>
                     <option>OFF</option>
                   </select>
                 </ExpansionPanelDetails>
                 <Button
+                onClick={this.updateSensorNode}
                   fullWidth
                   color="primary"
                 //onClick={() => this.showNotification("br")}
@@ -437,15 +512,15 @@ class map extends Component {
               </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   <label>Cluster Node IP Address</label>
-                  <select>
-                    <option>130.65.254.1</option>
-                    <option>130.65.254.2</option>
-                    <option>130.65.254.3</option>
-                    <option>130.65.254.4</option>
+                  <select onChange={(e)=>{this.changeHandler('delClusterId',e)}}>
+                    {this.state.clusters.map((data)=>{
+                      return(<option value={data._id}>{data.ipaddress}</option>)
+                    })}
                   </select>
 
                 </ExpansionPanelDetails>
                 <Button
+                onClick={this.deleteClusterId}
                   fullWidth
                   color="danger"
                 //onClick={() => this.showNotification("br")}
@@ -459,22 +534,20 @@ class map extends Component {
                   Delete Sensor
               </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                  <label>Cluster Node IP Address</label>
-                  <select>
-                    <option>130.65.254.1</option>
-                    <option>130.65.254.2</option>
-                    <option>130.65.254.3</option>
-                    <option>130.65.254.4</option>
-                  </select>
-                  <label>Sensor Node IP Address</label>
-                  <select>
-                    <option>130.65.124.1</option>
-                    <option>130.65.124.2</option>
-                    <option>130.65.124.3</option>
-                    <option>130.65.124.4</option>
-                  </select>
+                <select onChange={this.updateSensorDropdown}>
+                    {this.state.clusters.map((data)=>{
+                      return(<option value={data._id}>{data.ipaddress}</option>)
+                    })}
+                    </select>
+                  <label>Old Sensor Node IP Address</label>
+                  <select onChange={(e)=>{this.changeHandler('delsensorId',e)}}>
+                    {this.state.updateSensorOld.map((data)=>{
+                      return(<option value={data._id}>{data.ipaddress}</option>)
+                    })}
+                    </select>     
                 </ExpansionPanelDetails>
                 <Button
+                onClick={this.deleteSensorId}
                   fullWidth
                   color="danger"
                 //onClick={() => this.showNotification("br")}

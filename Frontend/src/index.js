@@ -9,7 +9,7 @@ import RTL from "layouts/RTL.jsx";
 import Login from "./components/login/login";
 import Signup from "./components/signup/signup";
 import Home from "./components/home/home";
-
+import "../src/assets/css/login.css"
 import "assets/css/material-dashboard-react.css?v=1.6.0";
 
 const hist = createBrowserHistory();
@@ -21,7 +21,7 @@ ReactDOM.render(
       <Route exact path="/" component={Home}></Route>
       <Route path="/signup" component={Signup}></Route>
       <Route path="/admin" component={Admin} />
-      <Route path="/rtl" component={RTL} />
+      {/* <Route path="/rtl" component={RTL} /> */}
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>
   </Router>,

@@ -137,7 +137,7 @@
     .sign-up a{
         color: #0077b9
     }
-    .CardBody-cardBody-277 .MuiExpansionPanelDetails-root-393 input{
+    .dashboard input{
         display: block;
         width: 90%;
       border-radius:5px;
@@ -146,7 +146,7 @@
         padding: 10px;
         border: 1px solid #ddd;
     }
-    .CardBody-cardBody-277 .MuiExpansionPanelDetails-root-393 select{
+    .dashboard select{
         display: block;
         width: 90%;
       border-radius:5px;
@@ -155,7 +155,14 @@
         padding: 10px;
         border: 1px solid #ddd;
     }
-    .CardBody-cardBody-277 .MuiExpansionPanelDetails-root-393 {
+    div[class*="MuiExpansionPanelDetails-root"] {
         display: block;
         padding: 10px 10px 10px;
+      }
+      div[class^='MuiExpansionPanelDetails-root'] {
+        display: block;
+        padding: 10px 10px 10px;
+    }
+    .Footer-footer-385{
+        display: none !important;
     }
