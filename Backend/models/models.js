@@ -6,101 +6,126 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
   email: String,
   password: String,
-  name:String,
-  role:String,
+  name: String,
+  role: String,
 });
 
 var clusterSchema = new Schema({
-  clusterid: String,
-  clusterlatitude: String,
-  clusterlongitude:String
+  ipaddress: String,
+  status:{
+    type:String,
+    default:"ON"
+  },
+  sensorNodeArray: [{
+    type: Schema.Types.ObjectId, ref: 'sensornode'
+  }]
 });
 
-var sensorSchema = new Schema({
-  sensorid: String,
-  sensorlatitude: String,
-  sensorlongitude:String
+var regionSchema = new Schema({
+  name: String,
+  address: String,
+  lattitude: String,
+  longitude: String,
+  clusterArray: [{
+    type: Schema.Types.ObjectId, ref: 'cluster'
+  }]
 });
 
-var courseSchema=new Schema({
-  courseId: Number,
-  courseTerm: String,
-  courseDepartment: String,
-  courseName: String,
-  courseDescription: String,
-  courseRoom: String,
-  courseCapacity: Number,
-  waitlistCapacity: Number,
-  currEnrollment: Number,
-  currWaitlist: Number,
-  uid: {type:Schema.Types.ObjectId,ref:'users'},
-  lecturefiles:[{
-    file:String,
-    filename:String,
-    posted:Date
-  }],
-  permissioncode:[{
-    code:String,
-    used:Number,
-    uid: {type:Schema.Types.ObjectId,ref:'users'}
-  }],
-announcement:[{
-  header:String,
-  bodyText:String,
-  plainText:String,
-  posted:Date
-  }],
-  assignments:[{
-    header:String,
-    bodyText:String,
-    plainText:String,
-    posted:Date,
-    due:Date,
-    available:Date, 
-    points:Number,
-    submission:[{
-      uid: {type:Schema.Types.ObjectId,ref:'users'},
-      grades:Number,
-      submissionfile:[{
-        file:String,
-        filename:String
+var sensorNodeSchema = new Schema({
+  ipaddress: String,
+  status:{type:String,default:"ON"},
+  data: {
+    temperatureData: [{
+      date: Date,
+      details: [{
+        temperature: Number
       }]
     }],
-  }],
-  quiz:[{
-    heading:String,
-    description:String,
-    posted:Date,
-    due:Date,
-    availablefrom:Date,
-    availableto:Date,
-    timelimit:Number,
-    published:Number,
-    points:Number,
-    questions:[{
-      question:String,
-      answer:String,
-      options:[{
-        type:String
+    rainData:[{
+      date:Date,
+      details:[{
+        rain:Number
       }]
     }],
-    quizsubmission:[{
-      uid:{type:Schema.Types.ObjectId,ref:'users'},
-      answers:[{
-        questionId:Schema.Types.ObjectId,
-        answer:String
-      }],
-      grades:Number
+    windData:[{
+      date:Date,
+      details:[{
+      wind:Number
+      }]
+    }],
+    humidityData:[{
+      date:Date,
+      details:[{
+        humidity:Number
+      }]
+    }],
+    smokeData:[{
+      date:Date,
+      details:[{
+        smoke:Number
+      }]
+    }]
+  }
+});
+var temperatureSensorSchema = new Schema({
+  data:[{
+    date:Date,
+    details:[{
+      temperature:Number
+    }]
+  }]
+});
+var smokeSensorSchema = new Schema({
+  data:[{
+    date:Date,
+    details:[{
+      smoke:Number
+    }]
+  }]
+});
+var humiditySensorSchema = new Schema({
+  data:[{
+    date:Date,
+    details:[{
+      humidity:Number
+    }]
+  }]
+});
+var rainSensorSchema = new Schema({
+  data:[{
+    date:Date,
+    details:[{
+      rain:Number
+    }]
+  }]
+});
+var windSensorSchema = new Schema({
+  data:[{
+    date:Date,
+    details:[{
+      wind:Number
     }]
   }]
 });
 
-var userModel = mongoose.model('users', userSchema );
-var courseModel = mongoose.model('courses', courseSchema );
+var userModel = mongoose.model('users', userSchema);
+var clusterModel = mongoose.model('cluster', clusterSchema);
+var regionModel = mongoose.model('region', regionSchema);
+var sensorNodeModel = mongoose.model('sensornode', sensorNodeSchema);
+var temperatureModel = mongoose.model('temperature', temperatureSensorSchema );
+var windModel = mongoose.model('wind', windSensorSchema );
+var smokeModel = mongoose.model('smoke', smokeSensorSchema );
+var rainModel = mongoose.model('rain', rainSensorSchema );
+var humidityModel = mongoose.model('humidity', humiditySensorSchema );
 
-module.exports={
-    userModel,
-    clusterSchema,
-    sensorSchema,
-    courseModel
+module.exports = {
+  userModel,
+  clusterModel,
+  regionModel,
+  sensorNodeModel,
+  temperatureModel,
+  windModel,
+  smokeModel,
+  rainModel,
+  humidityModel
 }

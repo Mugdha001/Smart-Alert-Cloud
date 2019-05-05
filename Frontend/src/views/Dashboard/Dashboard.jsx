@@ -29,7 +29,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-
+import {rootUrl} from "../../components/helpers/urlhelper";
+import axios from 'axios';
 import { bugs, website, server } from "variables/general.jsx";
 
 import {
@@ -41,9 +42,43 @@ import {
 import dashboardStyle from "assets/jss/material-dashboard-react/views/dashboardStyle.jsx";
 
 class Dashboard extends React.Component {
-  state = {
-    value: 0
-  };
+  // state = {
+  //   value: 0
+  // };
+  constructor(props){
+    super(props);
+    this.state={
+      value:0,
+      regions:[],
+      clusters:[],
+      sensors:[],
+      updateSensorOld:[],
+      activeSensors:[],
+      activeClusters:[]
+    }
+  }
+  update=()=>{
+    (async()=>{
+    try {
+      let {data:regions}=await axios.get(rootUrl+'/allregions');
+      let {data:clusters}=await axios.get(rootUrl+"/allclusters");
+      let {data:sensors}=await axios.get(rootUrl+"/allsensors");
+
+      this.setState({
+        regions,
+        clusters,
+        sensors,
+        updateSensorOld:clusters[0]?clusters[0].sensorNodeArray:[],
+        activeSensors:sensors.filter((data)=>{return data.status=="ON"}),
+        activeClusters:clusters.filter((data)=>{return data.status=="ON"})
+      })
+    } catch (error) {
+    }
+  })();
+  }
+  async componentDidMount(){
+   this.update();
+  }
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -64,7 +99,7 @@ class Dashboard extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>Total number of sensors</p>
                 <h3 className={classes.cardTitle}>
-                  1,665 <small></small>
+                 {this.state.sensors.length}<small></small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -86,7 +121,7 @@ class Dashboard extends React.Component {
                 <Icon>content_copy</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Total number of Clusters</p>
-                <h3 className={classes.cardTitle}>345</h3>
+                <h3 className={classes.cardTitle}>{this.state.clusters.length}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -103,7 +138,7 @@ class Dashboard extends React.Component {
                   <Icon>info_outline</Icon>
                 </CardIcon>
                 <p className={classes.cardCategory}>Active sensors</p>
-                <h3 className={classes.cardTitle}>775</h3>
+                <h3 className={classes.cardTitle}>{this.state.activeSensors.length}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -119,8 +154,8 @@ class Dashboard extends React.Component {
                 <CardIcon color="success">
                 <Icon>info_outline</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Active nodes</p>
-                <h3 className={classes.cardTitle}>245</h3>
+                <p className={classes.cardCategory}>Active Clusters</p>
+                <h3 className={classes.cardTitle}>{this.state.activeClusters.length}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>

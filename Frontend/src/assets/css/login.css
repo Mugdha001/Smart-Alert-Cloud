@@ -137,3 +137,32 @@
     .sign-up a{
         color: #0077b9
     }
+    .dashboard input{
+        display: block;
+        width: 90%;
+      border-radius:5px;
+        margin: auto;
+        margin-top:10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+    .dashboard select{
+        display: block;
+        width: 90%;
+      border-radius:5px;
+        margin: auto;
+        margin-top:10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+    div[class*="MuiExpansionPanelDetails-root"] {
+        display: block;
+        padding: 10px 10px 10px;
+      }
+      div[class^='MuiExpansionPanelDetails-root'] {
+        display: block;
+        padding: 10px 10px 10px;
+    }
+    .Footer-footer-385{
+        display: none !important;
+    }
