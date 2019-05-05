@@ -14,28 +14,12 @@ import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 import cookie from 'react-cookies'  
 
-import routes from "routes.js";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
-
-const switchRoutes = (
-  <Switch>
-    {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-    })}
-  </Switch>
-);
+import routes from "../routes";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -89,8 +73,37 @@ class Dashboard extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeFunction);
   }
-  render() {
-
+   render() {
+     let newRoutes=[];
+  if(!cookie.load("cookie")){
+      redirectVar = <Redirect to= "/login"/>
+  }else{
+    let {role}=cookie.load('cookie');
+    if(role=="admin"){
+      newRoutes=routes.filter((data)=>{
+        return data.role!=undefined;
+      });
+    }else{
+      newRoutes=routes.filter((data)=>{
+        return data.role==undefined;
+      });
+    }
+  }
+    const switchRoutes = (
+      <Switch>
+        {newRoutes.map((prop, key) => {
+          if (prop.layout === "/admin") {
+            return (
+              <Route
+                path={prop.layout + prop.path}
+                component={prop.component}
+                key={key}
+              />
+            );
+          }
+        })}
+      </Switch>
+    );
     const { classes, ...rest } = this.props;
     let redirectVar = null;
     if(!cookie.load("cookie")){
@@ -100,7 +113,7 @@ class Dashboard extends React.Component {
       <div className={classes.wrapper}>
       {redirectVar}
         <Sidebar
-          routes={routes}
+          routes={newRoutes}
           logoText={"Creative Tim"}
           logo={logo}
           image={this.state.image}
@@ -111,7 +124,7 @@ class Dashboard extends React.Component {
         />
         <div className={classes.mainPanel} ref="mainPanel">
           <Navbar
-            routes={routes}
+            routes={newRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />

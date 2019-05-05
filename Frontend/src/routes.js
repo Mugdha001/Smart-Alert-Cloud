@@ -21,10 +21,7 @@ import cookie from 'react-cookies'
 
 
 let dashboardRoutes=[];
-if(cookie.load("cookie")){
-  let cookieData=cookie.load("cookie");
-  console.log(cookieData);
-  if(cookieData.role=="admin"){
+
  dashboardRoutes = [
   {
     path: "/dashboard",
@@ -33,6 +30,8 @@ if(cookie.load("cookie")){
     icon: Dashboard,
     component: DashboardPage,
     layout: "/admin"
+    ,role:"admin"
+
   },
   {
     path: "/user",
@@ -41,6 +40,8 @@ if(cookie.load("cookie")){
     icon: Person,
     component: UserProfile,
     layout: "/admin"
+    ,role:"admin"
+
   },
   {
     path: "/table",
@@ -49,6 +50,8 @@ if(cookie.load("cookie")){
     icon: "content_paste",
     component: TableList,
     layout: "/admin"
+    ,role:"admin"
+
   },
   {
     path: "/billing",
@@ -57,14 +60,8 @@ if(cookie.load("cookie")){
     icon: LibraryBooks,
     component: Billing,
     layout: "/admin"
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin"
+    ,role:"admin"
+
   },
   {
     path: "/mapsView",
@@ -73,14 +70,8 @@ if(cookie.load("cookie")){
     icon: LocationOn,
     component: MapsView,
     layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    rtlName: "إخطارات",
-    icon: Notifications,
-    component: NotificationsPage,
-    layout: "/admin"
+    ,role:"admin"
+
   },
   {
     path: "/login",
@@ -92,7 +83,9 @@ if(cookie.load("cookie")){
     funcDeletecookie: function(){
       cookie.remove('cookie', { path: '/' })
     }
-  }
+    ,role:"admin"
+
+  },
   // },
   // {
   //   path: "/rtl-page",
@@ -102,9 +95,6 @@ if(cookie.load("cookie")){
   //   component: RTLPage,
   //   layout: "/rtl"
   // }
-];
-}else{
-  dashboardRoutes=[
     {
       path: "/dashboard",
       name: "Dashboard",
@@ -141,6 +131,6 @@ if(cookie.load("cookie")){
     }
     
   ];
-}
-}
+
+
 export default dashboardRoutes;
