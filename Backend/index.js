@@ -98,8 +98,8 @@ app.post('/login', function (req, res) {
             message: "Login Successfull!",
             token: 'JWT ' + token
           };
-          console.log(result);
-          console.log(result._id);
+          //console.log(result);
+          //console.log(result._id);
           res.cookie('cookie', JSON.stringify({ email: result._id, role: result.role, token: 'JWT ' + token }), { maxAge: 900000000, httpOnly: false, path: '/' });
           req.session.user = result._id;
         } else {
@@ -176,6 +176,8 @@ app.post('/addregion', async (req, res) => {
     });
     let result = await regionInstance.save();
     res.status(200).json(result);
+    console.log(result)
+    console.log("i am in add region");
   } catch (error) {
     res.status(400).json({ message: "Something went wrong!" })
   }
@@ -193,6 +195,8 @@ app.post('/addcluster', async (req, res) => {
       }
     })
     res.status(200).json(result2);
+    console.log(result)
+    console.log("i am in add cluster");
   } catch (error) {
     res.status(400).json({ message: "Something went wrong!" })
   }
@@ -231,6 +235,8 @@ app.post('/addsensornode', async (req, res) => {
       }
     })
     res.status(200).json(result2);
+    console.log(result)
+    console.log("i am in add sensor node");
   } catch (error) {
     console.log(error);
     res.status(404).json(error);
@@ -248,6 +254,8 @@ app.post('/deletesensorNode', async (req, res) => {
       }
     })
     res.status(200).json(result2);
+    console.log(result)
+    console.log("i am in delete sensor node");
   } catch (error) {
 
   }
@@ -264,10 +272,25 @@ app.post('/deleteCluster', async (req, res) => {
       }
     })
     res.status(200).json(result2);
+    console.log(result)
+    console.log("i am in delete cluster");
   } catch (error) {
 
   }
 });
+
+app.post('/deleteUser',async (req,res)=>{
+  try {
+    let {userId}=req.body;
+    let result=await userModel.deleteOne({_id:userId});
+    res.status(200).json(result);
+    console.log(result)
+    console.log("i am in delete user ");
+  } catch (error) {
+    
+  }
+});
+
 app.post('/updatesensornode', async (req, res) => {
   let { ipaddress, status, sensorId } = req.body;
   try {
@@ -276,6 +299,8 @@ app.post('/updatesensornode', async (req, res) => {
       ipaddress
     })
     res.status(200).json(result);
+    console.log(result)
+    console.log("i am in update sensor node");
   } catch (error) {
 
   }
@@ -288,6 +313,8 @@ app.post('/updatecluster', async (req, res) => {
       ipaddress
     })
     res.status(200).json(result);
+    console.log(result)
+    console.log("i am in update cluster");
   } catch (error) {
 
   }
@@ -296,33 +323,33 @@ app.get('/users', async (req, res) => {
   try {
     let result = await userModel.find({});
     res.status(200).json(result);
+    console.log(result)
+    console.log("i am in users");
   } catch (error) {
-
+    console.log(error);
+    console.log("in error");
+    res.status(404).json(error);
   }
 })
 app.get('/data/:regionId', async (req, res) => {
-  try {
+  try { 
     let {regionId}=req.params;
     let result = await regionModel.find({_id:regionId}).populate({path:"clusterArray",type:"cluster",populate:{path:"sensorNodeArray",type:"sensornode"}}).exec();
     res.status(200).json(result);
+    console.log(result)
+    console.log("i am in data: regions");
   } catch (error) {
 
   }
 })
-app.post('/deleteUser',async (req,res)=>{
-  try {
-    let {userId}=req.body;
-    let result=await userModel.deleteOne({_id:userId});
-    res.status(200).json(result);
-  } catch (error) {
-    
-  }
-});
+
 
 app.get('/allregions',async (req,res)=>{
   try {
     let result=await regionModel.find({});
     res.status(200).json(result);
+    console.log(result);
+    console.log("i am in all regions");    
   } catch (error) {
     
   }
@@ -331,6 +358,8 @@ app.get('/allclusters',async (req,res)=>{
   try {
     let result=await clusterModel.find({}).populate({path:"sensorNodeArray",type:"sensornode"});
     res.status(200).json(result);
+    console.log(result)
+    console.log("i am in all clusters");
   } catch (error) {
     
   }
@@ -339,6 +368,8 @@ app.get('/allsensors',async (req,res)=>{
   try {
     let result=await sensorNodeModel.find({});
     res.status(200).json(result);
+    console.log(result)
+    console.log("i am in all sensors");
   } catch (error) {
     
   }
